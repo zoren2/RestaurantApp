@@ -14,10 +14,8 @@
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
-Auth::routes();
+Route::get('/categories', 'CategoryController@index');
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/home', 'HomeController@index');

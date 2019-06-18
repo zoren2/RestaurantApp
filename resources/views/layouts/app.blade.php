@@ -7,22 +7,18 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', "Nadia's Garden Restaurant") }}
-        @yield('title')
-    </title>
+    <title>{{ config('app.name', "Nadia's Garden Restaurant") }}@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="icon" href="/images/favicon.ico">
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <link rel="icon" href="/images/favicon.ico">
 </head>
 <body>
-<div class="container app">
+<div id="app" class="container">
     <div class="top-bar">
         <div>Call us at (123) 456-7891</div>
         <div><a href="#">get driving directions</a></div>
@@ -57,12 +53,10 @@
                     <li>
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                              style="display: none;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </li>
@@ -80,8 +74,6 @@
         INFORMATION PROVIDED ABOUT THE PRODUCT IS ALSO FICTITIOUS AND SHOULD NOT BE CONSTRUED TO BE REPRESENTATIVE
         OF ACTUAL PRODUCTS ON THE MARKET IN A SIMILAR PRODUCT CATEGORY.
     </footer>
-</div>
-
 </div>
 </body>
 </html>

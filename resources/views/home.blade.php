@@ -11,22 +11,12 @@
     </p>
     <img src="/images/patio.jpg" class="home">
     <div class="menu-categories">
-        <article>
-            <a href="#"><img src="/images/mushrooms.jpg"></a>
-            <h2><a href="#">Starters</a></h2>
-        </article>
-        <article>
-            <a href="#"><img src="/images/salad.jpg"></a>
-            <h2><a href="#">Salads</a></h2>
-        </article>
-        <article>
-            <a href="#"><img src="/images/burger.jpg"></a>
-            <h2><a href="#">Entrees</a></h2>
-        </article>
-        <article>
-            <a href="#"><img src="/images/brownie.jpg"></a>
-            <h2><a href="#">Desserts</a></h2>
-        </article>
+        @foreach($categories as $category)
+            <article>
+                <a href="/menu#{{Str::slug($category->name)}}"><img src="/images/{{$category->image}}"></a>
+                <h2><a href="/menu#{{Str::slug($category->name)}}">Starters</a></h2>
+            </article>
+        @endforeach
     </div>
     <div class="social">
         <div>
@@ -43,6 +33,9 @@
                 Shad Cayden
             </p>
         </div>
+
+        <example-component></example-component>
+        <example-component></example-component>
         <div class="networks">
             <a href="#"><img src="/images/twitter.png"></a>
             <a href="#"><img src="/images/fb.png"></a>

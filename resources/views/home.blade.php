@@ -33,9 +33,6 @@
                 Shad Cayden
             </p>
         </div>
-
-        <example-component></example-component>
-        <example-component></example-component>
         <div class="networks">
             <a href="#"><img src="/images/twitter.png"></a>
             <a href="#"><img src="/images/fb.png"></a>

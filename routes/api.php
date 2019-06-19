@@ -15,3 +15,5 @@ use Illuminate\Http\Request;
 
 Route::post('/categories/upsert', 'CategoryController@upsert'); // calls api/categories/upsert
 
+Route::delete('/categories/{category}', 'CategoryController@destroy'); // Route model binding
+

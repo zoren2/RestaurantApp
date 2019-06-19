@@ -29,8 +29,12 @@
         methods: {
             removeCategory(index) {
                 if (confirm('Are you sure?')) {
-                    this.categories.splice(index, 1);
+                    let id = this.categories[index].id; // Block scoped
+                    if (id > 0) { // Once user confirms delete, then actually delete the resource
+                        axios.delete('/api/categories/' + id);
+                    }
                 }
+                this.categories.splice(index, 1);
             },
             addCategory() {
                 this.categories.push({

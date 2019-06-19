@@ -65,13 +65,13 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the category.
      *
-     * @param  \App\User $user
-     * @param  \App\Category $category
      * @return mixed
      */
-    public function delete(User $user, Category $category)
+    public function delete()
     {
-        //
+        if (auth()->user()->isAdmin()) {
+            return true;
+        }
     }
 
     /**

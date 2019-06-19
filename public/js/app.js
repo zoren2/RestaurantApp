@@ -1870,8 +1870,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     removeCategory: function removeCategory(index) {
       if (confirm('Are you sure?')) {
-        this.categories.splice(index, 1);
+        var id = this.categories[index].id; // Block scoped
+
+        if (id > 0) {
+          // Once user confirms delete, then actually delete the resource
+          axios["delete"]('/api/categories/' + id);
+        }
       }
+
+      this.categories.splice(index, 1);
     },
     addCategory: function addCategory() {
       var _this = this;

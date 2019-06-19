@@ -21,10 +21,22 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function upsert()
+    public function upsert(Request $request)
     {
         $this->authorize('manage', 'App\Category');
-        return ['success' => true];
+        $categories = $request->post('categories');
+
+        // Update existing categories and store new categories
+        foreach ($categories as $category) {
+            if ($category['id']) // Not empty or 0
+                Category::where('id', $category['id'])->update($category);
+            else
+                Category::create($category);
+        }
+        return [
+            'success' => true,
+            'categories' => Category::all()
+        ];
     }
 
     /**

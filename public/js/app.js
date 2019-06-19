@@ -1855,16 +1855,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialCategories'],
   data: function data() {
     return {
-      categories: _.cloneDeep(this.initialCategories) // Lodash function to prevent mutations
+      categories: _.cloneDeep(this.initialCategories),
+      // Lodash function to prevent mutations
+      feedback: '' // Feedback after saving
 
     };
-  },
-  created: function created() {
-    axios.post('/api/categories/upsert');
   },
   methods: {
     removeCategory: function removeCategory(index) {
@@ -1888,7 +1889,21 @@ __webpack_require__.r(__webpack_exports__);
         _this.$refs[''][0].focus(); // Binding to ref variable declared in text field (rather than the DOM)
 
       });
-    }
+    },
+    saveCategories: function saveCategories() {
+      var _this2 = this;
+
+      axios.post('/api/categories/upsert', {
+        categories: this.categories
+      }).then(function (res) {
+        // Callback - think AJAX
+        if (res.data.success) {
+          _this2.feedback = 'Changes saved.';
+          _this2.categories = res.data.categories; // Make id's are synced with the new category data
+        }
+      });
+    } // End save categories
+
   }
 });
 
@@ -37830,6 +37845,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.saveCategories($event)
+        }
+      }
+    },
     [
       _c("a", { staticClass: "add", on: { click: _vm.addCategory } }, [
         _vm._v("+ Add Category")
@@ -37923,7 +37946,11 @@ var render = function() {
           _vm._v(" "),
           _c("hr")
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("Save")]),
+      _vm._v(" "),
+      _c("div", [_vm._v(_vm._s(_vm.feedback))])
     ],
     2
   )

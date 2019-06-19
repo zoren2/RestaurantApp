@@ -14,7 +14,7 @@
         @foreach($categories as $category)
             <article>
                 <a href="/menu#{{Str::slug($category->name)}}"><img src="/images/{{$category->image}}"></a>
-                <h2><a href="/menu#{{Str::slug($category->name)}}">Starters</a></h2>
+                <h2><a href="/menu#{{Str::slug($category->name)}}">{{$category->name}}</a></h2>
             </article>
         @endforeach
     </div>

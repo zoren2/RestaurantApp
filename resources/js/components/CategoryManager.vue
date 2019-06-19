@@ -23,6 +23,9 @@
                 categories: _.cloneDeep(this.initialCategories) // Lodash function to prevent mutations
             };
         },
+        created() {
+            axios.post('/api/categories/upsert');
+        },
         methods: {
             removeCategory(index) {
                 if (confirm('Are you sure?')) {
@@ -35,7 +38,7 @@
                     name: '',
                     image: '',
                     display_order: this.categories.length + 1
-                })
+                });
                 this.$nextTick(() => { // Callback to wait until DOM updates
                     window.scrollTo(0, document.body.scrollHeight);
                     this.$refs[''][0].focus(); // Binding to ref variable declared in text field (rather than the DOM)

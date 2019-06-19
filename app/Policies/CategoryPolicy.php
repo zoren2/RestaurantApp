@@ -21,12 +21,11 @@ class CategoryPolicy
      * Determine whether the user can manage categories
      *
      * @param  \App\User $user
-     * @param  \App\Category $category
      * @return mixed
      */
     public function manage(User $user)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**

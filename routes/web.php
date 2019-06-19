@@ -19,3 +19,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/categories', 'CategoryController@index');
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/menu-editor', 'AdminController@menu')->middleware('can:edit-menu');

@@ -20,6 +20,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
 Vue.component('category-manager', require('./components/CategoryManager.vue').default);
+Vue.component('menu-editor', require('./components/MenuEditor.vue').default);
+
 
 
 /**

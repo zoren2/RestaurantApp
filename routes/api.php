@@ -19,10 +19,11 @@ Route::delete('/categories/{category}', 'CategoryController@destroy'); // Route 
 
 Route::post('/menu-items/add', 'MenuItemController@store');
 
-Route::post('/add-image', function (Request $request)
-{
+Route::post('/add-image', function (Request $request) {
     $file = $request->file('file');
     $dir = 'public/images';
     $path = $file->store($dir);
     return str_replace("$dir/", '', $path);
 }); // Closure for convenience
+
+Route::get('/categories/{category}/items', 'CategoryController@items');

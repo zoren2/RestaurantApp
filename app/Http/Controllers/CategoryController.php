@@ -68,6 +68,7 @@ class CategoryController extends Controller
      */
     public function items(Category $category)
     {
+        // Uses a category has many menu items relationship to quickly retrieve all menu items in a category
         return $category->menuItems->map(function ($item) {
             return $item->only(['id', 'name']);
         });

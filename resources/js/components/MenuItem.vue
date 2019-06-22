@@ -2,7 +2,7 @@
     <form class="item-form" @submit.prevent="save" novalidate>
         <div>
             <input type="text" placeholder="Item name" v-model="item.name" required>
-            $<input type="number" min="0" step=".01" v-model="item.price" required>
+            <input type="number" min="0" step=".01" v-model="item.price" required>
         </div>
         <div>
             <textarea v-model="item.description" placeholder="Item description" required></textarea>
@@ -13,6 +13,9 @@
                 <option v-for="cat in initialCategories" :value="cat.id" :key="cat.id">{{cat.name}}</option>
             </select>
         </div>
+
+        <img v-if="id && item.image" :src="`/storage/images/${item.image}`" width="200">
+        <!-- Makes sure we are in editing mode -->
         <drop-zone :options="dropzoneOptions" id="dz" ref="dropzone"></drop-zone>
         <button type="submit">Save</button>
         <ul>
@@ -29,7 +32,7 @@
         components: {
             dropZone: vue2Dropzone
         },
-        props: ['initial-categories'],
+        props: ['initial-categories', 'id'],
         data() {
             return {
                 dropzoneOptions: {
@@ -52,18 +55,30 @@
                 errors: []
             };
         },
+        created() {
+            // params: {id: item.id}} If editing, then id will exist. (Won't be part of data)
+            if (this.id) {
+                axios.get('/api/menu-items/' + this.id)
+                    .then(res => this.item = res.data);
+            }
+        },
         methods: {
             save() {
                 let files = this.$refs.dropzone.getAcceptedFiles();
                 if (files.length > 0 && files[0].filename) {
                     this.item.image = files[0].filename;
                 }
-                axios.post('/api/menu-items/add', this.item)
+
+                let url = '/api/menu-items/add';
+                if (this.id) {
+                    url = '/api/menu-items/' + this.id;
+                }
+                axios.post(url, this.item)
                     .then(res => {
                         this.$router.push('/');
                     })
                     .catch(error => {
-                        let messages = Object.values(error.response.data.errors); // Returns an array of arrays
+                        let messages = Object.values(error.response.data.errors); // Returns an array of arrays - have to dig in to get the error message.
                         this.errors = [].concat.apply([], messages); // Concatenating an empty array with the messages array
                     });
             }

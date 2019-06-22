@@ -40,7 +40,7 @@
                     component: MenuItem
                 },
                 {
-                    path: 'edit-item/:id',
+                    path: '/edit-item/:id',
                     name: 'edit-item',
                     component: MenuItem,
                     props: true // automatically provides ID as a prop to MenuItem component

@@ -1966,7 +1966,7 @@ __webpack_require__.r(__webpack_exports__);
       name: 'add-item',
       component: _MenuItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
     }, {
-      path: 'edit-item/:id',
+      path: '/edit-item/:id',
       name: 'edit-item',
       component: _MenuItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
       props: true // automatically provides ID as a prop to MenuItem component
@@ -2016,6 +2016,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
  // Directory from node_modules folder
 
 
@@ -2023,7 +2026,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     dropZone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a
   },
-  props: ['initial-categories'],
+  props: ['initial-categories', 'id'],
   data: function data() {
     return {
       dropzoneOptions: {
@@ -2047,9 +2050,19 @@ __webpack_require__.r(__webpack_exports__);
       errors: []
     };
   },
+  created: function created() {
+    var _this = this;
+
+    // params: {id: item.id}} If editing, then id will exist. (Won't be part of data)
+    if (this.id) {
+      axios.get('/api/menu-items/' + this.id).then(function (res) {
+        return _this.item = res.data;
+      });
+    }
+  },
   methods: {
     save: function save() {
-      var _this = this;
+      var _this2 = this;
 
       var files = this.$refs.dropzone.getAcceptedFiles();
 
@@ -2057,12 +2070,18 @@ __webpack_require__.r(__webpack_exports__);
         this.item.image = files[0].filename;
       }
 
-      axios.post('/api/menu-items/add', this.item).then(function (res) {
-        _this.$router.push('/');
-      })["catch"](function (error) {
-        var messages = Object.values(error.response.data.errors); // Returns an array of arrays
+      var url = '/api/menu-items/add';
 
-        _this.errors = [].concat.apply([], messages); // Concatenating an empty array with the messages array
+      if (this.id) {
+        url = '/api/menu-items/' + this.id;
+      }
+
+      axios.post(url, this.item).then(function (res) {
+        _this2.$router.push('/');
+      })["catch"](function (error) {
+        var messages = Object.values(error.response.data.errors); // Returns an array of arrays - have to dig in to get the error message.
+
+        _this2.errors = [].concat.apply([], messages); // Concatenating an empty array with the messages array
       });
     }
   }
@@ -2100,6 +2119,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categoryId: this.initialCategories[0].id,
+      // Hmm
       items: []
     };
   },
@@ -38333,7 +38353,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v("\n        $"),
+        _vm._v(" "),
         _c("input", {
           directives: [
             {
@@ -38426,6 +38446,12 @@ var render = function() {
           2
         )
       ]),
+      _vm._v(" "),
+      _vm.id && _vm.item.image
+        ? _c("img", {
+            attrs: { src: "/storage/images/" + _vm.item.image, width: "200" }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c("drop-zone", {
         ref: "dropzone",

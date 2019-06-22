@@ -19,7 +19,7 @@
         props: ['initialCategories'],
         data() {
             return {
-                categoryId: this.initialCategories[0].id,
+                categoryId: this.initialCategories[0].id, // Hmm
                 items: []
             };
         },

@@ -66,6 +66,10 @@
                     .then(res => this.item = res.data);
             }
         },
+        beforeRouteLeave(to, from, next) {
+            this.item = newItem();
+            next();
+        },
         methods: {
             save() {
                 let files = this.$refs.dropzone.getAcceptedFiles();
@@ -74,7 +78,7 @@
                 }
 
                 let url = '/api/menu-items/add';
-                if (this.id) {
+                if (this.id) { // There's already an item, then update instead
                     url = '/api/menu-items/' + this.id;
                 }
                 axios.post(url, this.item)

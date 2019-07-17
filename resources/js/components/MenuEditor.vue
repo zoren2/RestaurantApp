@@ -4,7 +4,7 @@
         <router-link :to="{name: 'categories'}">Categories</router-link>
         <router-link :to="{name: 'items'}">Items</router-link>
         <router-link :to="{name: 'add-item'}">Add Item</router-link>
-        <router-view :initial-categories="categories"></router-view>
+        <router-view :initial-categories="categories" :key="$route.fullPath"></router-view>
     </div>
 </template>
 

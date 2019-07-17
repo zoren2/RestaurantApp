@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MenuItemPostRequest;
 use App\MenuItem;
 use Illuminate\Http\Request;
 
@@ -27,27 +28,16 @@ class MenuItemController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param MenuItemPostRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuItemPostRequest $request)
     {
-        if (!$request->user()->can('edit-menu')) {
-            return response('Unauthorized', 403);
-        }
-
-        $request->validate([
-            'name' => 'required|max:128',
-            'description' => 'required|max:512',
-            'price' => 'required|numeric|min:0',
-            'category_id' => 'required|numeric',
-            'image' => 'required'
-        ]);
-
-        MenuItem::create($request->post()); // add all the data
+        MenuItem::create($request->validated()); // add all the data
     }
 
     /**
@@ -75,13 +65,12 @@ class MenuItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\MenuItem $menuItem
-     * @return \Illuminate\Http\Response
+     * @param MenuItemPostRequest $request
+     * @param MenuItem $menuItem
      */
-    public function update(Request $request, MenuItem $menuItem)
+    public function update(MenuItemPostRequest $request, MenuItem $menuItem)
     {
-        //
+        $menuItem->update($request->validated());
     }
 
     /**

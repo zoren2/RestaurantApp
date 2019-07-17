@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\MenuItem;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,8 @@ Route::post('/menu-items/add', 'MenuItemController@store');
 Route::get('/menu-items/{menuItem}', function (MenuItem $menuItem) {
     return $menuItem;
 });
+
+Route::post('/menu-items/{menuItem}', 'MenuItemController@update');
 
 Route::post('/add-image', function (Request $request) {
     $file = $request->file('file');

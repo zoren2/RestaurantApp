@@ -28,6 +28,16 @@
     import vue2Dropzone from 'vue2-dropzone'; // Directory from node_modules folder
     import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
+    function newItem() {
+        return {
+            name: '',
+            price: 0.00,
+            image: '',
+            category_id: '',
+            description: ''
+        };
+    }
+
     export default {
         components: {
             dropZone: vue2Dropzone
@@ -45,13 +55,7 @@
                         file.filename = res;
                     }
                 },
-                item: {
-                    name: '',
-                    price: 0.00,
-                    image: '',
-                    category_id: '',
-                    description: ''
-                },
+                item: newItem(),
                 errors: []
             };
         },
@@ -84,4 +88,11 @@
             }
         }
     }
+
 </script>
+
+<style scoped>
+    .item-form {
+        margin-top: 20px;
+    }
+</style>

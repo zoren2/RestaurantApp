@@ -4,7 +4,7 @@
         <router-link :to="{name: 'categories'}">Categories</router-link>
         <router-link :to="{name: 'items'}">Items</router-link>
         <router-link :to="{name: 'add-item'}">Add Item</router-link>
-        <router-view :initial-categories="categories" :key="$route.fullPath"></router-view>
+        <router-view :key="$route.fullPath"></router-view>
     </div>
 </template>
 
@@ -13,9 +13,14 @@
     import CategoryManager from './CategoryManager.vue';
     import MenuItem from './MenuItem.vue';
     import MenuItemList from './MenuItemList.vue';
+    import store from '../store';
 
     export default {
+        store,
         props: ['categories'],
+        created() { // Sets category in the store
+            this.$store.commit('SET_CATEGORIES', _.cloneDeep(this.categories)); // Avoid mutating props
+        },
         router: new VueRouter({
             mode: 'history',
             base: 'menu-editor',

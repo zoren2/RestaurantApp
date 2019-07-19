@@ -27,5 +27,10 @@ class CategoriesTableSeeder extends Seeder
             'image' => 'burger.jpg',
             'display_order' => 3
         ]);
+        $category4 = Category::create([
+            'name' => 'Desserts',
+            'image' => 'brownie.jpg',
+            'display_order' => 4
+        ]);
     }
 }

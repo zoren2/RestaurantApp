@@ -10,13 +10,13 @@
         <div>
             <select v-model="item.category_id" required>
                 <option value="">Select a category</option>
-                <option v-for="cat in initialCategories" :value="cat.id" :key="cat.id">{{cat.name}}</option>
+                <option v-for="cat in categories" :value="cat.id" :key="cat.id">{{cat.name}}</option>
             </select>
         </div>
 
         <img v-if="id && item.image" :src="`/storage/images/${item.image}`" width="200">
         <!-- Makes sure we are in editing mode -->
-        <drop-zone :options="dropzoneOptions" id="dz" ref="dropzone"></drop-zone>
+        <vue-dropzone :options="dropzoneOptions" id="dz" ref="dropzone"></vue-dropzone>
         <button type="submit">Save</button>
         <ul>
             <li v-for="(error, index) in errors" :key="index">{{error}}</li>
@@ -28,6 +28,7 @@
     import vue2Dropzone from 'vue2-dropzone'; // Directory from node_modules folder
     import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
+    // Doesn't need to be in the Vuex store
     function newItem() {
         return {
             name: '',
@@ -40,9 +41,9 @@
 
     export default {
         components: {
-            dropZone: vue2Dropzone
+            vueDropzone: vue2Dropzone
         },
-        props: ['initial-categories', 'id'],
+        props: ['id'],
         data() {
             return {
                 dropzoneOptions: {
@@ -58,6 +59,11 @@
                 item: newItem(),
                 errors: []
             };
+        },
+        computed: {
+            categories() {
+                return this.$store.state.categories;
+            }
         },
         created() {
             // params: {id: item.id}} If editing, then id will exist. (Won't be part of data)

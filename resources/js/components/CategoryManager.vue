@@ -19,22 +19,19 @@
 
 <script>
     export default {
-        props: ['initialCategories'],
-        data() {
-            return {
-                categories: _.cloneDeep(this.initialCategories), // Lodash function to prevent mutations
-                feedback: '' // Feedback after saving
-            };
+        computed: {
+            categories() {
+                return this.$store.state.categories;
+            },
+            feedback() {
+                return this.$store.state.feedback;
+            }
         },
         methods: {
             removeCategory(index) {
                 if (confirm('Are you sure?')) {
-                    let id = this.categories[index].id; // Block scoped
-                    if (id > 0) { // Once user confirms delete, then actually delete the resource
-                        axios.delete('/api/categories/' + id);
-                    }
+                    this.$store.dispatch('removeCategory', index);
                 }
-                this.categories.splice(index, 1);
             },
             addCategory() {
                 this.categories.push({
@@ -49,15 +46,7 @@
                 });
             },
             saveCategories() {
-                axios.post('/api/categories/upsert', {
-                    categories: this.categories
-                })
-                    .then((res) => { // Callback - think AJAX
-                        if (res.data.success) {
-                            this.feedback = 'Changes saved.';
-                            this.categories = res.data.categories; // Make id's are synced with the new category data
-                        }
-                    });
+                this.$store.dispatch('saveCategories');
             } // End save categories
 
 

@@ -20,6 +20,8 @@ Route::get('/categories', 'CategoryController@index');
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/menu', 'HomeController@menu');
+
 Route::get('/menu-editor/{any?}', 'AdminController@menu')
     ->middleware('can:edit-menu')
     ->where('any', '.*'); // Any string of characters

@@ -29,4 +29,15 @@ class HomeController extends Controller
             'categories' => $categories
         ]);
     }
+
+    /**
+     * Shows the items that are on the menu.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function menu()
+    {
+        $categories = Category::with('menuItems')->orderBy('display_order')->get();
+        return view('menu', ['categories' => $categories]);
+    }
 }

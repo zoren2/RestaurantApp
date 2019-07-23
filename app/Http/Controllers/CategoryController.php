@@ -35,7 +35,7 @@ class CategoryController extends Controller
         }
         return [
             'success' => true,
-            'categories' => Category::all()
+            'categories' => Category::orderBy('display_order')->get()
         ];
     }
 
